@@ -1,0 +1,47 @@
+<div class="wrapper" id="wrapper">
+  <div class="sidebar" data-color="azure" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
+    <app-sidebar></app-sidebar>
+    <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-3.jpg)"></div>
+  </div>
+  <div class="main-panel">
+    <!-- <div class="header-bg"></div>  -->
+    <app-navbar></app-navbar>
+    <!-- <nz-breadcrumb>
+      <nz-breadcrumb-item><i class="fa fa-home mr-2"></i>Home</nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a>Application List</a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>An Application</nz-breadcrumb-item>
+    </nz-breadcrumb> -->
+
+    <!-- <nz-breadcrumb>
+      <nz-breadcrumb-item *ngFor="let breadcrumb of breadcrumbs"
+          class="breadcrumb-item">
+        <a routerLink="{{breadcrumb}}">
+          {{ getBredcumValue(breadcrumb) | titlecase}}
+        </a>
+      </nz-breadcrumb-item>
+    </nz-breadcrumb> -->
+
+    <ul class="breadcrumb">
+      <li *ngFor="let breadcrumb of breadcrumbs ; index as i"
+          class="breadcrumb-item">
+          <ng-container *ngIf="i == 0"><i class="fa fa-home mr-2"></i></ng-container>
+          
+          
+        <a  >
+         {{getBredcumValue(breadcrumb) | titlecase}}
+        </a>
+      </li>
+    </ul>
+
+  
+
+    <router-outlet></router-outlet>
+    <div *ngIf="isMaps('maps')">
+      <app-footer></app-footer>
+    </div>
+  </div>
+  <div class="fixed-plugin"></div>
+</div>
+<!-- Buy-Modal-angular -->

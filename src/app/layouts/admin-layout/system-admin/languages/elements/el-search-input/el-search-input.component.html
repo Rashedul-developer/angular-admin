@@ -1,0 +1,16 @@
+<nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" [nzSuffix]="inputClearTemplate">
+    <input type="text" [(ngModel)]="term" (ngModelChange)="termChange($event)" nz-input [placeholder]="placeholder" />
+</nz-input-group>
+<ng-template #suffixIconButton>
+    <button nz-button nzType="primary" nzSearch (click)="action()" (keydown)="action()"><i nz-icon [nzType]="icon"></i></button>
+</ng-template>
+<ng-template #inputClearTemplate>
+    <i
+        nz-icon
+        class="ant-input-clear-icon"
+        nzTheme="fill"
+        nzType="close-circle"
+        *ngIf="term"
+        (click)="reset()"
+    ></i>
+</ng-template>

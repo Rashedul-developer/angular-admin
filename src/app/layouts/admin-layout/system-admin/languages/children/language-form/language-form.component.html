@@ -1,0 +1,68 @@
+<!-- <form [formGroup]="mainForm">
+    <ng-container *ngFor="let item of localizedItems.controls; let i = index" formArrayName="localizes">
+        <div [formGroupName]="i" class="row">
+            <div class="col-md-12">
+                <label for="controlName">Name</label>
+                <input type="text" formControlName="name">
+            </div>
+        </div>
+        
+    </ng-container>
+</form> -->
+
+
+
+
+
+<form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h4 class="text-center"><strong>{{ this._languageService.getTranslation('Add_Language_Form_Title') }}</strong></h4>
+    <nz-divider nzDashed></nz-divider>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="controlActive">{{ this._languageService.getTranslation('Active_Language') }}</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-switch formControlName="controlActive"></nz-switch>
+        </nz-form-control>
+    </nz-form-item>
+    <!-- <ng-container *ngFor="let language of translate.getLangs()">
+        <nz-form-item *ngIf="languagesControlsAdded">
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="controlName{{ language }}" nzRequired>{{ this._languageService.getTranslation('Language_Name') }} ({{ language | uppercase }})</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTplName">
+              <input nz-input type="text" formControlName="controlName{{ language }}" id="controlName{{ language }}" />
+              <ng-template #errorTplName let-control>
+                <ng-container *ngIf="control.hasError('required')">Please provide language name!</ng-container>
+              </ng-template>
+            </nz-form-control>
+        </nz-form-item>
+    </ng-container> -->
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="controlName" nzRequired>{{ this._languageService.getTranslation('Language_Name') }}</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTplName">
+          <input nz-input type="text" formControlName="controlName" id="controlName" />
+          <ng-template #errorTplName let-control>
+            <ng-container *ngIf="control.hasError('required')">Please provide language name!</ng-container>
+          </ng-template>
+        </nz-form-control>
+    </nz-form-item>
+    
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="controlCode" nzRequired>{{ this._languageService.getTranslation('Language_Code') }}</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTplCode">
+          <input nz-input type="text" formControlName="controlCode" id="controlCode" />
+          <ng-template #errorTplCode let-control>
+            <ng-container *ngIf="control.hasError('required')">Please provide language code!</ng-container>
+            <ng-container *ngIf="control.hasError('duplicated')">The code already exists!</ng-container>
+          </ng-template>
+        </nz-form-control>
+    </nz-form-item>
+
+    <p class="text-center">{{ this._languageService.getTranslation('Add_Language_Form_Description') }}</p>
+
+    <nz-divider></nz-divider>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button nz-button (click)="reset()" type="button">CLEAR</button>
+            &nbsp;&nbsp;
+            <button nz-button nzType="primary" type="submit" [disabled]="!form.valid" [nzLoading]="showLoaderSubmitting">SAVE&nbsp;&nbsp;<i class="fa fa-arrow-right"></i></button>
+        </div>
+    </div>
+</form>

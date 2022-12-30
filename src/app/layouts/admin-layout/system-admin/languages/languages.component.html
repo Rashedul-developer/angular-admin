@@ -1,0 +1,212 @@
+<ng-container>
+    <ng-container>
+        <div class="main-content">
+            <div class="container-fluid">
+                <!-- <ng-container>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card form-head-color " data-color="azure">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <button nz-button nzType="primary" [routerLink]="['add']">
+                                                <i class="fa fa-plus"></i>
+                                                &nbsp;&nbsp;
+                                                Add Language
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container> -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card form-head-color " data-color="azure">
+                                    <div class="card-header card-header-infinity d-flex justify-content-between">
+                                        <h4 class="card-title">Languages List</h4>
+                                        <!-- <button nz-button nzType="default" [routerLink]="['add']">
+                                            <i class="fa fa-plus mr-2"></i>
+                                            Add Language
+                                        </button> -->
+                                    </div>
+                                    <br><br>
+                                    <div class="card-body">
+                                        <ng-container>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-2 text-left">
+                                                    
+                                                </div>
+                                                <div class="col-md-6 mb-4">
+                                                    <app-el-search-input 
+                                                        placeholder="Search...." 
+                                                        icon="search"
+                                                        (onChange)="getDataBySearch($event)"
+                                                        (onAction)="getDataBySearch($event)"
+                                                        (onReset)="getDataByDefault()"
+                                                    ></app-el-search-input>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="row" *ngIf="showFilteredTitle">
+                                                        <div class="col-md-12 text-center">
+                                                            <p><u><strong>{{ (filteredTitleText != '') ? filteredTitleText : '' }}</strong></u></p>
+                                                        </div>
+                                                        <br>
+                                                    </div>
+                                                    <nz-table 
+                                                        #dynamicTable
+                                                        [nzShowPagination]="tableSettings.showPagination"
+                                                        [nzShowSizeChanger]="tableSettings.showSizeChanger"
+                                                        [nzFrontPagination]="tableSettings.frontendPagination"
+                                                        [nzData]="items"
+                                                        [nzLoading]="tableSettings.loading"
+                                                        [nzSize]="tableSettings.size"
+                                                        [nzTotal]="totalItems"
+                                                        [nzPageIndex]="pageNumber"
+                                                        [nzPageSize]="resultsPerPage"
+                                                        (nzPageIndexChange)="pageIndexChange($event)"
+                                                        (nzPageSizeChange)="pageSizeChange($event)"
+                                                    >
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th *ngFor="let column of columns">
+                                                                    <strong class="text-left">{{ column.title }}</strong>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="table-font text-left">
+                                                            <ng-container *ngFor="let item of dynamicTable.data; index as i">
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td><a><span class="code-text"><strong>{{ item.id }}</strong></span></a></td>
+                                                                    <td>
+                                                                        {{ item.name }}
+                                                                    </td>
+                                                                    <td>
+                                                                        <ng-container *ngIf="item.code">
+                                                                            <img src="assets/img/country-flag/{{item.code}}.png" style="width: 40px;">
+                                                                        </ng-container>
+                                                                    </td>
+                                                                    <td>
+                                                                        {{ item.code | uppercase }}
+                                                                    </td>
+                                                                    <td>
+                                                                        <button nz-button nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
+                                                                            <i class="fa fa-ellipsis-v"></i>
+                                                                        </button>                                            
+                                                                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                                                                            <ul nz-menu>
+                                                                                <li nz-menu-item style="color: darkgreen;" (click)="onActiveLanguage(item.id)"><i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;Active Language</li>
+                                                                                <li nz-menu-item style="color: darkred;" nz-popconfirm
+                                                                                nzPopconfirmTitle="Are you sure delete this ?"
+                                                                                nzPopconfirmPlacement="bottom"
+                                                                                (nzOnConfirm)="onDeleteLanguage(item.id)"
+                                                                                (nzOnCancel)="onDeleteCancel()"><i class="fa fa-times"></i>&nbsp;&nbsp;&nbsp;Delete Language</li>
+                                                                                <ng-container *ngIf="item.disable_by">
+                                                                                    <li nz-menu-divider></li>
+                                                                                    <ng-container *ngIf="item.created_by">
+                                                                                        <li nz-menu-item>Created By&nbsp;&nbsp;<strong>{{ item.created_by?.profile.first_name }} {{ item.created_by?.profile.middle_name }} {{ item.created_by?.profile.last_name }}</strong>&nbsp;&nbsp;({{ item.created_at | date:'short' }})</li>
+                                                                                    </ng-container>
+                                                                                    <li nz-menu-item>Disabled By&nbsp;&nbsp;<strong>{{ item.disable_by?.profile.first_name }} {{ item.disable_by?.profile.middle_name }} {{ item.disable_by?.profile.last_name }}</strong>&nbsp;&nbsp;({{ item.disable_date | date:'short' }})</li>
+                                                                                </ng-container>
+                                                                            </ul>
+                                                                        </nz-dropdown-menu>
+                                                                    </td>
+                                                                </tr>
+                                                            </ng-container>
+                                                        </tbody>
+                                                    </nz-table>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card form-head-color " data-color="azure">
+                                    <div class="card-header card-header-infinity">
+                                        <h4 class="card-title">Active Languages List</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul nz-list [nzDataSource]="itemsActive" nzBordered nzSize="large" [nzLoading]="loadingActive">
+                                            <li nz-list-item *ngFor="let item of itemsActive" nzNoFlex>
+                                              <ul nz-list-item-actions>
+                                                <nz-list-item-action>
+                                                    <button nz-button nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
+                                                        <i class="fa fa-ellipsis-v"></i>
+                                                    </button>                                            
+                                                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                                                        <ul nz-menu>
+                                                            <li nz-menu-item style="color: brown;" (click)="onDisableLanguage(item.id)"><i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;&nbsp;Disable Language</li>
+                                                            <ng-container *ngIf="item.active_by">
+                                                                <li nz-menu-divider></li>
+                                                                <li nz-menu-item>Activated By&nbsp;&nbsp;<strong>{{ item.active_by?.profile.first_name }} {{ item.active_by?.profile.middle_name }} {{ item.active_by?.profile.last_name }}</strong>&nbsp;&nbsp;({{ item.active_date | date:'short' }})</li>
+                                                            </ng-container>
+                                                        </ul>
+                                                    </nz-dropdown-menu>
+                                                </nz-list-item-action>
+                                              </ul>
+                                                <ng-container *ngIf="item.code">
+                                                    <img class="mr-2" src="assets/img/country-flag/{{item.code}}.png" style="width: 40px;">
+                                                </ng-container>
+                                                {{ item.name }} ({{ item.code | uppercase }})
+                                            </li>
+                                            <nz-list-footer class="text-right">
+                                                <button nz-button nzType="default" [routerLink]="['trash']">
+                                                    <i class="fa fa-trash mr-2"></i>
+                                                    Go To Trash
+                                                </button>
+                                            </nz-list-footer>
+                                          </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <button style="width: 100%" nz-button nzType="primary" nzSize="large" [routerLink]="['translator']">
+                                    <i class="fa fa-globe mr-2"></i>
+                                    Translator
+                                </button>
+                                <!-- <div class="card form-head-color " data-color="azure">
+                                    <div class="card-header card-header-infinity">
+                                        <h4 class="card-title">Trash</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul nz-list [nzDataSource]="itemsActive" nzBordered nzSize="large" [nzLoading]="loadingActive">
+                                            <li nz-list-item *ngFor="let item of itemsActive" nzNoFlex>
+                                              <ul nz-list-item-actions>
+                                                <nz-list-item-action>
+                                                    <button nz-button nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
+                                                        <i class="fa fa-ellipsis-v"></i>
+                                                    </button>                                            
+                                                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                                                        <ul nz-menu>
+                                                            <li nz-menu-item style="color: brown;" (click)="onDisableLanguage(item.id)"><i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;&nbsp;Disable Language</li>
+                                                        </ul>
+                                                    </nz-dropdown-menu>
+                                                </nz-list-item-action>
+                                              </ul>
+                                                <ng-container *ngIf="item.code">
+                                                    <img class="mr-2" src="assets/img/country-flag/{{item.code}}.png" style="width: 40px;">
+                                                </ng-container>
+                                                {{ item.name }} ({{ item.code | uppercase }})
+                                            </li>
+                                          </ul>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-container>
+

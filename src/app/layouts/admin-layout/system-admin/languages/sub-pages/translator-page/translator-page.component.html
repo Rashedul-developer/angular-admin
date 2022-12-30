@@ -1,0 +1,62 @@
+<ng-container>
+    <ng-container>
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="col-md-12">
+                    <div class="card form-head-color " data-color="azure">
+                        <div class="card-header card-header-infinity d-flex justify-content-between">
+                            <h4 class="card-title">Language Translator</h4>
+                            <button nz-button nzType="default" [routerLink]="['/system/languages']">
+                                <i class="fa fa-arrow-left mr-2"></i>
+                                Back To List
+                            </button>
+                        </div>
+                        <br><br>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <nz-tabset nzCentered>
+                                        <nz-tab *ngFor="let item of items" [nzTitle]="titleTemplate">
+                                            <ng-template #titleTemplate>
+                                                <ng-container *ngIf="item.code">
+                                                    <img class="mr-2" src="assets/img/country-flag/{{item.code}}.png" style="width: 40px;">
+                                                </ng-container>
+                                                {{ item.name }} ({{ item.code | uppercase }})
+                                            </ng-template>
+                                            <nz-table #basicTable nzShowPagination="false" [nzData]="item.translations">
+                                                <tbody>
+                                                    <tr *ngFor="let translation of item.translations">
+                                                        <td width="15%">{{ translation.key.replaceAll('_', ' ') | titlecase }}</td>
+                                                        <td><input nz-input placeholder="" [(ngModel)]="translation.value" /></td>
+                                                    </tr>
+                                                </tbody>
+                                            </nz-table>
+                                            
+                                            
+                                            <!-- <ng-container *ngFor="let translation of item.translations">
+                                                
+                                                <nz-form-item>
+                                                    <nz-form-label [nzSpan]="4" nzRequired nzFor="name">{{ translation.key.replaceAll('_', ' ') | titlecase }}</nz-form-label>
+                                                    <nz-form-control [nzSpan]="8" nzErrorTip="Please input your name">
+                                                        <input type="text" nz-input placeholder="Please input your name" [value]="translation.value" />
+                                                    </nz-form-control>
+                                                </nz-form-item>
+                                            </ng-container> -->
+                                        </nz-tab>
+                                    </nz-tabset>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <button nz-button nzType="primary" type="button" (click)="onSubmit()" [nzLoading]="showLoaderSubmitting">SAVE&nbsp;&nbsp;<i class="fa fa-floppy-o"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-container>

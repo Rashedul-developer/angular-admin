@@ -1,0 +1,52 @@
+<!-- <br><br><br><br><br><br>
+<app-language-form></app-language-form>
+<br><br><br><br><br><br> -->
+<ng-container>
+    <ng-container>
+        <div class="main-content">
+            <div class="container-fluid">
+                <!-- <ng-container>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card form-head-color " data-color="azure">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <button nz-button nzType="primary" [routerLink]="['/system/languages']">
+                                                <i class="fa fa-arrow-left mr-2"></i>
+                                                Back To List
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container> -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card form-head-color " data-color="azure">
+                            <div class="card-header card-header-infinity d-flex justify-content-between">
+                                <h4 class="card-title">Add Language</h4>
+                                <button nz-button nzType="default" [routerLink]="['/system/languages']">
+                                    <i class="fa fa-arrow-left mr-2"></i>
+                                    Back To List
+                                </button>
+                            </div>
+                            <br><br>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <ng-container>
+                                            <app-language-form></app-language-form>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-container>
